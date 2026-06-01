@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Assistente de Bordo</title>
+    <style>
+      
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+      body { 
+        font-family: 'Courier New', Courier, monospace; 
+        background-color: #0a0f1d; 
+        color: #00ffcc; 
+        background-image: radial-gradient(#141f36 1px, transparent 1px);
+        background-size: 20px 20px; 
+      }
+
+      
+      #messages { 
+        list-style-type: none; 
+        margin: 0; 
+        padding: 20px; 
+        margin-bottom: 60px; 
+      }
+      
+      #messages li { 
+        padding: 12px 18px; 
+        margin-bottom: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        line-height: 1.5;
+        border-left: 3px solid #00aaff;
+        background: rgba(16, 26, 48, 0.6); 
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      
+      #messages li:nth-child(odd) { 
+        background: rgba(22, 38, 71, 0.7); 
+      }
+
+      
+      form { 
+        background: #070b14; 
+        padding: 10px; 
+        position: fixed; 
+        bottom: 0; 
+        width: 100%; 
+        border-top: 2px solid #00ffcc; 
+        box-shadow: 0 -5px 15px rgba(0, 255, 204, 0.1);
+        display: flex;
+      }
+      
+      form input { 
+        border: 1px solid #1f365d; 
+        padding: 12px; 
+        width: 85%; 
+        background: #0d1527; 
+        color: #ffffff; 
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+        border-radius: 4px;
+        outline: none;
+        transition: border 0.3s ease;
+      }
+
+      form input:focus {
+        border: 1px solid #00ffcc; 
+        box-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+      }
+      
+      form button { 
+        width: 14%; 
+        margin-left: 1%;
+        background: #00ffcc; 
+        color: #070b14; 
+        border: none; 
+        padding: 12px; 
+        font-weight: bold;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 13px;
+        text-transform: uppercase;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      form button:hover {
+        background: #00ccaa;
+        box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" placeholder="Digite uma diretriz de comando..." /><button>Enviar</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(){
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+        socket.on('chat message', function(msg){
+          $('#messages').append($('<li>').text(msg));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+      });
+    </script>
+  </body>
+</html>

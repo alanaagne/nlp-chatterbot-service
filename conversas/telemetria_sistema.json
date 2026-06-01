@@ -1,0 +1,31 @@
+{
+    "conversas": [
+        {
+            "mensagens": [
+                "relatorio do sistema de suporte a vida",
+                "como esta o oxigenio e os niveis vitais",
+                "status do suporte a vida",
+                "verificar suporte a vida"
+            ],
+            "resposta": "Suporte à vida operando com 98% de eficiência. Níveis de oxigênio estáveis e recicladores atmosféricos sem obstruções."
+        },
+        {
+            "mensagens": [
+                "nivel de combustivel e combustiveis aceitaveis",
+                "quanto resta de combustivel",
+                "quais elementos posso usar como combustivel",
+                "status dos tanques de energia"
+            ],
+            "resposta": "Níveis dos tanques principais em 74%. Motores térmicos aceitam hidrogênio pesado e isótopos de hélio-3 para reabastecimento."
+        },
+        {
+            "mensagens": [
+                "status dos escudos e integridade do casco",
+                "como estao as defesas da nave",
+                "relatorio de danos no casco",
+                "verificar blindagem"
+            ],
+            "resposta": "Defletor de escudos operando com 100% de capacidade. Integridade estrutural do casco externo confirmada em 95% sem rupturas detectadas."
+        }
+    ]
+}

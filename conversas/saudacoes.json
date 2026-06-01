@@ -1,0 +1,20 @@
+{
+    "conversas": [
+        {
+            "mensagens": ["oi", "olá", "ola", "oi, tudo bem?", "como vai?", "olá, como vai?", "ola, como vai?"],
+            "resposta": "Olá, eu sou seu assistente de bordo. Sistema de monitoramento tático ativo. Aguardando diretrizes de comando."
+        },
+        {
+            "mensagens": ["bom dia", "oi, bom dia", "olá, bom dia"],
+            "resposta": "Bom dia, eu sou seu assistente de bordo. Sistemas operacionais operando dentro da normalidade. Como posso ajudar?"
+        },
+        {
+            "mensagens": ["boa tarde", "oi, boa tarde", "olá, boa tarde"],
+            "resposta": "Boa tarde, eu sou seu assistente de bordo. Diagnóstico rápido de rotina concluído. Aguardando instruções."
+        },
+        {
+            "mensagens": ["boa noite", "oi, boa noite", "olá, boa noite"],
+            "resposta": "Boa noite, eu sou seu assistente de bordo. Sensores de varredura operando em modo padrão. Aguardando comandos."
+        }
+    ]
+}
