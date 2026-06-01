@@ -5,7 +5,7 @@ var io = require('socket.io')(server);
 var port = process.env.PORT || 3000;
 
 const URL_assistente_de_bordo = "http://127.0.0.1:5000/resposta/";
-const CONFIANCA_MINIMA = 0.75;
+const CONFIANCA_MINIMA = 0.6;
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
