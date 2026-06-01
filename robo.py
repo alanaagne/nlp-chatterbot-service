@@ -1,29 +1,72 @@
 from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer
+import json
+import os
 import time
 
 NOME_ROBO = "assistente_de_bordo"
-LIMIAR_ACEITACAO = 0.75
+LIMIAR_ACEITACAO = 0.6
+
+CONVERSAS_FILES = [
+    "conversas/saudacoes.json",
+    "conversas/navegacao_seguranca.json",
+    "conversas/telemetria_sistema.json"
+]
 
 time.clock = time.time
+
+
+def carregar_conversas():
+    conversas = []
+
+    for arquivo_conversas in CONVERSAS_FILES:
+        try:
+            with open(arquivo_conversas, "r", encoding="utf-8") as arquivo:
+                treinamento = json.load(arquivo)
+                conversas.extend(treinamento.get("conversas", []))
+        except Exception as e:
+            print(f"Erro carregando conversas: {e}")
+
+    return conversas
+
+
+def treinar(robo):
+    treinador = ListTrainer(robo)
+    conversas = carregar_conversas()
+
+    for mensagem_resposta in conversas:
+        mensagens = mensagem_resposta.get("mensagens", [])
+        resposta = mensagem_resposta.get("resposta", "")
+
+        for mensagem in mensagens:
+            treinador.train([mensagem.lower(), resposta])
+
 
 def iniciar():
     iniciado, robo = False, None
 
     try:
+        database_path = "db.sqlite3"
+        needs_training = not os.path.exists(database_path)
 
-        robo = ChatBot(NOME_ROBO, read_only=True)
+        if needs_training:
+            bot_para_treino = ChatBot(NOME_ROBO, database_uri=f"sqlite:///{database_path}")
+            treinar(bot_para_treino)
+            bot_para_treino.close()
 
+        robo = ChatBot(NOME_ROBO, read_only=True, database_uri=f"sqlite:///{database_path}")
         iniciado = True
 
     except Exception as e:
         print(f"Erro iniciando robô: {e}")
 
-    return iniciado, robo,
+    return iniciado, robo
+
 
 def get_resposta(robo, mensagem):
     resposta = robo.get_response(mensagem.lower())
+    return resposta.confidence, resposta.text
 
-    return resposta.confidence,resposta.text
 
 if __name__ == "__main__":
     iniciado, robo = iniciar()
