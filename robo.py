@@ -49,10 +49,21 @@ def iniciar():
         database_path = "db.sqlite3"
         needs_training = not os.path.exists(database_path)
 
+        if not needs_training:
+            db_mtime = os.path.getmtime(database_path)
+            for arquivo_conversas in CONVERSAS_FILES:
+                if os.path.getmtime(arquivo_conversas) > db_mtime:
+                    needs_training = True
+                    break
+
         if needs_training:
+            if os.path.exists(database_path):
+                os.remove(database_path)
+
             bot_para_treino = ChatBot(NOME_ROBO, database_uri=f"sqlite:///{database_path}")
             treinar(bot_para_treino)
-            bot_para_treino.close()
+            
+            
 
         robo = ChatBot(NOME_ROBO, read_only=True, database_uri=f"sqlite:///{database_path}")
         iniciado = True
